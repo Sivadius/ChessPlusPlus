@@ -3,13 +3,6 @@
 #include "piece.h"
 using namespace std;
 
-Piece::Piece() {
-	symbol = "?";
-	colour = 0;
-	xPos = 0;
-	yPos = 0;
-}
-
 //Initial constructor
 Piece::Piece(bool theColour, int x, int y) {
 	symbol = "?";
