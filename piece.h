@@ -9,14 +9,15 @@ protected:
 	int xPos; //Position on the x-axis
 	int yPos; //Position on the y-axis
 	bool colour; //Binary value for colour
+	std::string type; //The type of piece
 public:
-	Piece();
 	Piece(bool theColour, int x, int y); //Piece constructor
-	void printColour(); //Displays colour
+	bool getColour(); //Displays colour
 	virtual bool move(int newX, int newY); //Unrestricted movement
 	int getX(); //Return xPos
 	int getY(); //Return yPos
-	std::string getSymbol();
+	std::string getSymbol(); //Return icon on board
+	void printMoveTable(bool table[8][8]); //Prints valid moves
 	~Piece(); //Piece destuctor
 };
 

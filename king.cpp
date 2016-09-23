@@ -1,22 +1,23 @@
 #include <iostream>
 #include <string>
 #include "piece.h"
-#include "knight.h"
+#include "king.h"
 using namespace std;
 
-Knight::Knight(bool theColour, int x, int y) : Piece(theColour, x, y) {
-	if(colour ==1) {
-		symbol = "♞";
+King::King(bool theColour, int x, int y) : Piece(theColour, x, y) {
+	if(colour == 1) {
+		symbol = "♚";
 	} else {
-		symbol = "♘";
+		symbol = "♔";
 	}
-	type = "Knight";
+	type = "King";
 }
 
-bool Knight::move(int newX, int newY) {
+
+bool King::move(int newX, int newY) {
 	//return false if moving to the same position
 	if((newX==xPos) && (newY==yPos)) {
-		cout << "Your Knight is already there." << endl;
+		cout << "Your King is already there." << endl;
 		return 0;
 	}
 
@@ -33,21 +34,23 @@ bool Knight::move(int newX, int newY) {
 	};
 
 	//Sets available positions to 1
-	for(int r=-2 ; r<3 ; r++) {
-		for(int c=-2 ; c<3 ; c++) {
-			if((r==0) || (c==0) || (r/c==1) || (r/c==-1)) {
-				continue;
-			} else if((xPos-1+r >= 0) && (xPos-1+r <= 7)
-			&& (yPos-1+c >= 1) && (yPos-1+c <= 7)) {
-				canGo[xPos-1+r][yPos-1+c] = 1;
+	for(int i=-1 ; i<2 ; i++) {
+		for(int j=-1 ; j<2 ; j++) {
+			if((xPos-1+i < 8) && 
+			(xPos-1+i >= 0) &&
+			(yPos-1+j < 8) &&
+			(yPos-1+j >= 0)) {
+				canGo[xPos-1+i][yPos-1+j] = 1;
 			}
 		}
 	}
+	
+	// this->printMoveTable(canGo);
 
 	//Checks for valid movement
 	if(canGo[newX-1][newY-1] == 1) {
 		return Piece::move(newX, newY);
 	}
-	cout << "Your Knight cannot move there." << endl;
+	cout << "Your King cannot move there." << endl;
 	return 0;
 }

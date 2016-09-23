@@ -3,29 +3,40 @@
 #include "piece.h"
 #include "knight.h"
 #include "castle.h"
+#include "pawn.h"
+#include "bishop.h"
+#include "queen.h"
+#include "king.h"
 #include <cstdlib>
 using namespace std;
 
 int main() {
-	//syntax = board[9-y-1][x-1]
+	//syntax = board[8-y][x-1]
 	string board[8][8] = {
-		{"♖","♘","♗","♕","♔","♗","♘","♖"},
-		{"♙","♙","♙","♙","♙","♙","♙","♙"},
 		{" "," "," "," "," "," "," "," "},
 		{" "," "," "," "," "," "," "," "},
 		{" "," "," "," "," "," "," "," "},
 		{" "," "," "," "," "," "," "," "},
-		{"♟","♟","♟","♟","♟","♟","♟","♟"},
-		{"♜","♞","♝","♛","♚","♝","♞","♜"}
+		{" "," "," "," "," "," "," "," "},
+		{" "," "," "," "," "," "," "," "},
+		{" "," "," "," "," "," "," "," "},
+		{" "," "," "," "," "," "," "," "}
 	};
-	Piece *p1;
 	Knight *k1;
 	Castle *c1;
-	p1 = new Piece(0, 0, 0);
+	Pawn *p1;
+	Bishop *b1;
+	Queen *q1;
+	King *i1;
 	int xPos = 2;
 	int yPos = 1;
 	k1 = new Knight(1,xPos,yPos);
 	c1 = new Castle(0,4,4);
+	p1 = new Pawn(1,4,6);
+	b1 = new Bishop(1,6,6);
+	q1 = new Queen(0,4,3);
+	i1 = new King(0,3,5);
+	board[8-yPos][xPos-1] = k1->getSymbol();
 	while(true) {
 		system("clear");
 		for(int i=0 ; i<8 ; i++) {
@@ -42,14 +53,13 @@ int main() {
 		yPos = k1->getY();
 		bool legit = 0;
 		while(not legit) {
-			c1->move(3,4);
 			cout << "x-coordinate (1-8)";
 			cin >> xMove;
 			cout << "y-coordinate (1-8)";
 			cin >> yMove;
 			legit = k1->move(xMove,yMove);
 		}
-		board[9-yPos-1][xPos-1] = " ";
+		board[8-yPos][xPos-1] = " ";
 		board[9-yMove-1][xMove-1] = k1->getSymbol();
 	}
 	delete p1;

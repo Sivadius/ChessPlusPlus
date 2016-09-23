@@ -1,23 +1,24 @@
 #include <iostream>
 #include <string>
 #include "piece.h"
-#include "castle.h"
+#include "queen.h"
+#include "bishop.h"
 using namespace std;
 
-Castle::Castle(bool theColour, int x, int y) : Piece(theColour, x, y) {
-	if(colour ==1) {
-		symbol = "♜";
+Queen::Queen(bool theColour, int x, int y) : Piece(theColour, x, y) {
+	if(colour == 1) {
+		symbol = "♛";
 	} else {
-		symbol = "♖";
+		symbol = "♕";
 	}
-	type = "Castle";
+	type = "Queen";
 }
 
 
-bool Castle::move(int newX, int newY) {
+bool Queen::move(int newX, int newY) {
 	//return false if moving to the same position
 	if((newX==xPos) && (newY==yPos)) {
-		cout << "Your Castle is already there." << endl;
+		cout << "Your Queen is already there." << endl;
 		return 0;
 	}
 
@@ -32,10 +33,22 @@ bool Castle::move(int newX, int newY) {
 		{0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0},
 	};
-	canGo[xPos-1][yPos-1] = 1;
 
 	//Sets available positions to 1
+	int steps[4] = {min(xPos, yPos), min(xPos, 8-yPos)};
+	int theX;
+	int theY;
 	for(int i=0 ; i<8 ; i++) {
+		theX = xPos-steps[0]+i;
+		theY = yPos-steps[0]+i;
+		if((theX < 8) && (theY < 8) && (theX >= 0) && (theY >= 0)) {
+			canGo[theX][theY] = 1;
+		}
+		theX = xPos-steps[1]-1+i;
+		theY = yPos+steps[1]-1-i;
+		if((theX < 8) && (theY < 8) && (theX >= 0) && (theY >= 0)) {
+			canGo[theX][theY] = 1;
+		}
 		canGo[xPos-1][i] = 1;
 		canGo[i][yPos-1] = 1;
 	}
@@ -46,6 +59,6 @@ bool Castle::move(int newX, int newY) {
 	if(canGo[newX-1][newY-1] == 1) {
 		return Piece::move(newX, newY);
 	}
-	cout << "Your Castle cannot move there." << endl;
+	cout << "Your Queen cannot move there." << endl;
 	return 0;
 }

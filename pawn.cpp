@@ -1,23 +1,24 @@
 #include <iostream>
 #include <string>
 #include "piece.h"
-#include "castle.h"
+#include "pawn.h"
 using namespace std;
 
-Castle::Castle(bool theColour, int x, int y) : Piece(theColour, x, y) {
-	if(colour ==1) {
-		symbol = "♜";
+Pawn::Pawn(bool theColour, int x, int y) : Piece(theColour, x, y) {
+	if(colour == 1) {
+		symbol = "♟";
 	} else {
-		symbol = "♖";
+		symbol = "♙";
 	}
-	type = "Castle";
+	type = "Pawn";
+	first = 1;
 }
 
 
-bool Castle::move(int newX, int newY) {
+bool Pawn::move(int newX, int newY) {
 	//return false if moving to the same position
 	if((newX==xPos) && (newY==yPos)) {
-		cout << "Your Castle is already there." << endl;
+		cout << "Your Pawn is already there." << endl;
 		return 0;
 	}
 
@@ -32,20 +33,30 @@ bool Castle::move(int newX, int newY) {
 		{0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0},
 	};
-	canGo[xPos-1][yPos-1] = 1;
 
 	//Sets available positions to 1
 	for(int i=0 ; i<8 ; i++) {
-		canGo[xPos-1][i] = 1;
-		canGo[i][yPos-1] = 1;
+		if((colour == 1) && (yPos < 8)) {
+			canGo[xPos-1][yPos] = 1;
+			if(first) { 
+				canGo[xPos-1][yPos+1] = 1; 
+			}
+		}
+		else if((colour == 0) && (yPos-2 >= 0)) {
+			canGo[xPos-1][yPos-2] = 1;
+			if(first) {
+				canGo[xPos-1][yPos-3] = 1;
+			}
+		}
 	}
 
 	// this->printMoveTable(canGo);
 
 	//Checks for valid movement
 	if(canGo[newX-1][newY-1] == 1) {
+		first = 0;
 		return Piece::move(newX, newY);
 	}
-	cout << "Your Castle cannot move there." << endl;
+	cout << "Your Pawn cannot move there." << endl;
 	return 0;
 }
