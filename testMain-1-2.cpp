@@ -13,6 +13,7 @@ using namespace std;
 int main() {
 	//Useful lists
 	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
 	string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
 	string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
@@ -181,6 +182,7 @@ int main() {
 	bool turn = 1; //Is it the white players turn?
 	int turnNum = 1; //Current turn number.
 	while(true) {
+		bool reselect = 0; //Should the player reselect their piece?
 		system("clear"); //Clears the display
 		cout << "Turn " << turnNum << ": ";
 		if(turn) {
@@ -215,7 +217,8 @@ int main() {
 			
 			//Converts string inputs to integers
 			for(int l=0 ; l<8 ; l++) {
-				if(letter == letters[l]) {
+				if((letter == letters[l])
+				|| (letter == letters2[l])) {
 					letterValue = l+1;
 				}
 				if(number == numbers[l]) {
@@ -233,37 +236,43 @@ int main() {
 					}
 				}
 			}
-			if(validSelection) {
-				break;
-			}
+			if(validSelection) {break;}
 			cout << "Invalid piece, try again." << endl;
 		}
 		//Displays selected piece
 		cout << "Selected = "
 		<< board[8-numberValue][letterValue-1] << 
-		"\nPick a location to move to." << endl;
+		"\nPick a location to move to.\nType 'r' to reselect another piece." << endl;
 
 		//Selecting a valid position to move to
 		while(true) {
 			cin >> select2;
 			char letter2 = select2[0];
 			char number2 = select2[1];
+
+			if((select2 == "r") || (select2 == "R")) {
+				cout << "This happens" << endl;
+				reselect = 1;
+				break;
+			}
+
 			//Converts string inputs to integers
 			for(int l=0 ; l<8 ; l++) {
-				if(letter2 == letters[l]) {
+				if((letter2 == letters[l])
+				|| (letter2 == letters2[l])) {
 					letterValue2 = l+1;
 				}
 				if(number2 == numbers[l]) {
 					numberValue2 = l+1;
 				}
 			}
-			//Continues if the move is valid
-			if(boardState[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
-				break;
-			} 
-			//Special case for Pawns being able to take diagonally
+
+			//Special cases
 			validSelection = 0;
+			bool validSelection2 = 1; //Toggle for special cases
 			for(int i=0 ; i<6 ; i++) {
+
+				//Pawns taking diagonally
 				if(((boardState[8-numberValue][letterValue-1]->getSymbol() == "♟")
 					&& (boardState[8-numberValue2][letterValue2-1]->getSymbol() == blackPieces[i]))
 					&& (((boardState[8-numberValue][letterValue-1]->getX() == boardState[8-numberValue2][letterValue2-1]->getX() + 1)
@@ -278,16 +287,37 @@ int main() {
 					polyPiece->Piece::move(letterValue2, numberValue2);
 					validSelection = 1;
 				}
+
+				//Prevention from taking own pieces
+				if(((turn==0) 
+					&& (boardState[8-numberValue2][letterValue2-1]->getSymbol() == blackPieces[i]))
+					|| ((turn==1) 
+					&& (boardState[8-numberValue2][letterValue2-1]->getSymbol() == whitePieces[i]))) {
+					cout << "Invalid move." << endl;
+					validSelection2 = 0;
+				}
 			}
-			if(validSelection) {
+
+			//Restarts the loop
+			if(!validSelection2) {
+				continue;
+			}
+
+			//Breaks out of the loop if the move is valid
+			if((boardState[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) 
+				|| (validSelection)) {
 				break;
-			}
+			} 
 		}
+
+		//Restart the loop
+		if(reselect) {continue;}
+
 		//Necessary updates to the board
 		board[8-numberValue][letterValue-1] = " ";
 		board[8-numberValue2][letterValue2-1] = boardState[8-numberValue][letterValue-1]->getSymbol();
 		boardState[8-numberValue2][letterValue2-1] = boardState[8-numberValue][letterValue-1];
-		boardState[8-numberValue][letterValue-1] = new Piece(boardState[8-numberValue][letterValue-1]->getColour(), letterValue, numberValue);
+		// boardState[8-numberValue][letterValue-1] = new Piece(boardState[8-numberValue][letterValue-1]->getColour(), letterValue, numberValue);
 
 		turn = !turn; //Toggles the turn
 		if(turn) {turnNum++;} // Increments turn number

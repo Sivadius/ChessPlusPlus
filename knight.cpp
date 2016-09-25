@@ -38,11 +38,13 @@ bool Knight::move(int newX, int newY) {
 			if((r==0) || (c==0) || (r/c==1) || (r/c==-1)) {
 				continue;
 			} else if((xPos-1+r >= 0) && (xPos-1+r <= 7)
-			&& (yPos-1+c >= 1) && (yPos-1+c <= 7)) {
+			&& (yPos-1+c >= 0) && (yPos-1+c <= 7)) {
 				canGo[xPos-1+r][yPos-1+c] = 1;
 			}
 		}
 	}
+
+	// this->printMoveTable(canGo);
 
 	//Checks for valid movement
 	if(canGo[newX-1][newY-1] == 1) {
