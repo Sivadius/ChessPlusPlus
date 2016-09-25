@@ -17,6 +17,7 @@ int main() {
 	string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
 	string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
 
+	//Board Display
 	//syntax is: board[8-y][x-1]
 	string board[8][8] = {
 		{" "," "," "," "," "," "," "," "},
@@ -29,6 +30,8 @@ int main() {
 		{" "," "," "," "," "," "," "," "}
 	};
 
+	//2D piece array containing all the pieces.
+	//Empty spaces have default pieces in them.
 	Piece *boardState[8][8];
 	for(int i=0 ; i<8 ; i++) {
 		for(int j=0 ; j<8 ; j++) {
@@ -175,16 +178,17 @@ int main() {
 
 
 
-	bool turn = 1;
-	int turnNum = 1;
+	bool turn = 1; //Is it the white players turn?
+	int turnNum = 1; //Current turn number.
 	while(true) {
-		system("clear");
+		system("clear"); //Clears the display
 		cout << "Turn " << turnNum << ": ";
 		if(turn) {
 			cout << "White\n" << endl;
 		} else {
 			cout << "Black\n" << endl;
 		}
+		//Displays the board
 		for(int i=0 ; i<8 ; i++) {
 			cout << 8-i << " ";
 			for(int j=0 ; j<8 ; j++) {
@@ -194,14 +198,14 @@ int main() {
 		}
 		cout << "  A B C D E F G H\n" << endl;
 
-		string select;
-		string select2;
+		string select; //First input for piece selection
+		string select2; //Second input for location to move to
 		cout << "Select a piece (A1 to H8)." << endl;
-		int letterValue;
-		int numberValue;
-		int letterValue2;
-		int numberValue2;
-		bool validSelection = 0;
+		int letterValue; //Integer value for x-coordinate for first input
+		int numberValue; //Integer value for y-coordinate for first input
+		int letterValue2; //Integer value for x-coordinate for second input
+		int numberValue2; //Integer value for y-coordinate for second input
+		bool validSelection = 0; //Is the current selection valid?
 
 		//Selecting a valid piece
 		while(true) {
@@ -209,6 +213,7 @@ int main() {
 			char letter = select[0];	//character coordinate
 			char number = select[1];	//numerical coordinate
 			
+			//Converts string inputs to integers
 			for(int l=0 ; l<8 ; l++) {
 				if(letter == letters[l]) {
 					letterValue = l+1;
@@ -218,9 +223,9 @@ int main() {
 				}
 			}
 
-			//checks for appropriate input to break input loop-K
+			//Checks for appropriate input to break input loop-K
 			if (numberValue>=1 && numberValue<=8){
-			
+				//Checks if correct colour piece has been selected
 				for(int i=0 ; i<6 ; i++) {
 					if(((turn == 1) && (board[8-numberValue][letterValue-1] == whitePieces[i]))
 					|| ((turn == 0) && (board[8-numberValue][letterValue-1] == blackPieces[i]))) {
@@ -233,6 +238,7 @@ int main() {
 			}
 			cout << "Invalid piece, try again." << endl;
 		}
+		//Displays selected piece
 		cout << "Selected = "
 		<< board[8-numberValue][letterValue-1] << 
 		"\nPick a location to move to." << endl;
@@ -242,6 +248,7 @@ int main() {
 			cin >> select2;
 			char letter2 = select2[0];
 			char number2 = select2[1];
+			//Converts string inputs to integers
 			for(int l=0 ; l<8 ; l++) {
 				if(letter2 == letters[l]) {
 					letterValue2 = l+1;
@@ -250,6 +257,7 @@ int main() {
 					numberValue2 = l+1;
 				}
 			}
+			//Continues if the move is valid
 			if(boardState[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
 				break;
 			} 
@@ -275,13 +283,14 @@ int main() {
 				break;
 			}
 		}
+		//Necessary updates to the board
 		board[8-numberValue][letterValue-1] = " ";
 		board[8-numberValue2][letterValue2-1] = boardState[8-numberValue][letterValue-1]->getSymbol();
 		boardState[8-numberValue2][letterValue2-1] = boardState[8-numberValue][letterValue-1];
 		boardState[8-numberValue][letterValue-1] = new Piece(boardState[8-numberValue][letterValue-1]->getColour(), letterValue, numberValue);
-		// cin >> select2;
-		turn = !turn;
-		if(turn) {turnNum++;}
+
+		turn = !turn; //Toggles the turn
+		if(turn) {turnNum++;} // Increments turn number
 	}
 }
 
