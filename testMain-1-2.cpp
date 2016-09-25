@@ -206,8 +206,9 @@ int main() {
 		//Selecting a valid piece
 		while(true) {
 			cin >> select;
-			char letter = select[0];
-			char number = select[1];
+			char letter = select[0];	//character coordinate
+			char number = select[1];	//numerical coordinate
+			
 			for(int l=0 ; l<8 ; l++) {
 				if(letter == letters[l]) {
 					letterValue = l+1;
@@ -216,10 +217,15 @@ int main() {
 					numberValue = l+1;
 				}
 			}
-			for(int i=0 ; i<6 ; i++) {
-				if(((turn == 1) && (board[8-numberValue][letterValue-1] == whitePieces[i]))
-				|| ((turn == 0) && (board[8-numberValue][letterValue-1] == blackPieces[i]))) {
-					validSelection = 1;
+
+			//checks for appropriate input to break input loop-K
+			if (numberValue>=1 && numberValue<=8){
+			
+				for(int i=0 ; i<6 ; i++) {
+					if(((turn == 1) && (board[8-numberValue][letterValue-1] == whitePieces[i]))
+					|| ((turn == 0) && (board[8-numberValue][letterValue-1] == blackPieces[i]))) {
+						validSelection = 1;
+					}
 				}
 			}
 			if(validSelection) {
