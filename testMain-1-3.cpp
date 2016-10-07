@@ -29,26 +29,33 @@ int main() {
 	string select;
 	bool turn=board->getTurn();
 	int turnNum=board->getTurnNum();
+	char letter;
+	char number;
+	char letter2;
+	char number2;
 	while(true){
-		
-		turn=!turn;
-		if(turn){turnNum++;}
-
 		system("clear");
 
 		board->printBoard();
 
-
+		//Piece Selection
 		while(true){
 			cin >> select;
-			char letter = select[0];	//character coordinate
-			char number = select[1];	//numerical coordinate
-
+			letter = select[0];	//character coordinate
+			number = select[1];	//numerical coordinate
 			if(board->spaceCheck(letter, number)){break;}
-
-			cout<<"invalid selection"<<endl;
+			cout<<"Invalid Selection"<<endl;
+		}
+		
+		//Movement Selection
+		while(true) {
+			cout << "Pick a place to go!" << endl;
+			cin >> select;
+			letter2 = select[0];
+			number2 = select[1];
+			if(board->movePiece(letter, number, letter2, number2)){break;}
+			cout << "Invalid Selection" << endl;
 		}
 	}
-
-
+	board->changeTurn();
 }

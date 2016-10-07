@@ -86,6 +86,12 @@ int Board::getTurnNum(){
 	return turnNum;
 }
 
+void Board::changeTurn() {
+	turnWhite = !turnWhite;
+	if(turnWhite) {++turnNum;}
+}
+
+//Converts a character to it's integer coordinate
 int Board::pCipher(char input){
 	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
@@ -131,9 +137,31 @@ bool Board::spaceCheck(char letter, char number){
 	if(validSelection){
 		//Displays selected piece
 		cout << "Selected = "
-		<< field[8-numberValue][letterValue-1] << 
+		<< field[8-numberValue][letterValue-1]->getSymbol() << 
 		"\nPick a location to move to.\nType 'r' to reselect another piece." << endl;
 	}
 
 	return validSelection;
 }
+
+bool Board::movePiece(char letter, char number, char letter2, char number2) {
+	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
+	std::string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
+	std::string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
+
+	int numberValue= this->pCipher(number);
+	int letterValue= this->pCipher(letter);
+	int numberValue2 = this->pCipher(number2);
+	int letterValue2 = this->pCipher(letter2);
+	if(field[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
+		field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
+		field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
+		return 1;
+	}
+	
+	return 0;
+}
+
+Board::~Board() {}

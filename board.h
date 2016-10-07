@@ -25,8 +25,10 @@ public:
 	void newGame();
 	bool getTurn();
 	int getTurnNum();
+	void changeTurn();
 	bool spaceCheck(char letter, char number);
-	//~Board();
+	bool movePiece(char letter, char number, char letter2, char number2);
+	~Board();
 
 };
 
