@@ -56,6 +56,6 @@ int main() {
 			if(board->movePiece(letter, number, letter2, number2)){break;}
 			cout << "Invalid Selection" << endl;
 		}
+		board->changeTurn();
 	}
-	board->changeTurn();
 }

@@ -11,7 +11,7 @@
 using namespace std;
 
 //default constructor
-Board::Board(){
+Board::Board()	{
 	field[8][8];
 		
 	for(int i=0 ; i<8 ; i++) {
@@ -22,6 +22,12 @@ Board::Board(){
 
 	turnWhite=0;
 	turnNum=0;
+
+	// letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+	// letters2 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+	// numbers = {'1', '2', '3', '4', '5', '6', '7', '8'};
+	// whitePieces = {"♟","♜","♞","♝","♛","♚"};
+	// blackPieces = {"♙","♖","♘","♗","♕","♔"};
 
 }
 
@@ -88,7 +94,7 @@ int Board::getTurnNum(){
 
 void Board::changeTurn() {
 	turnWhite = !turnWhite;
-	if(turnWhite) {++turnNum;}
+	if(turnWhite) {turnNum++;}
 }
 
 //Converts a character to it's integer coordinate
@@ -155,6 +161,7 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	int letterValue= this->pCipher(letter);
 	int numberValue2 = this->pCipher(number2);
 	int letterValue2 = this->pCipher(letter2);
+
 	if(field[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
 		field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
 		field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
