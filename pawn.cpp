@@ -14,7 +14,7 @@ Pawn::Pawn(bool theColour, int x, int y) : Piece(theColour, x, y) {
 	first = 1;
 }
 
-
+//details valid moves for piece
 bool Pawn::move(int newX, int newY) {
 	//return false if moving to the same position
 	if((newX==xPos) && (newY==yPos)) {

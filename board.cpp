@@ -63,7 +63,7 @@ void Board::newGame(){
 	turnWhite=1;
 	turnNum=1;
 }
-
+//displays current board state in terminal-K
 void Board::printBoard(){
 
 	cout << "Turn " << turnNum << ": ";
@@ -117,7 +117,7 @@ int Board::pCipher(char input){
 	}
 	return inputValue;
 }
-
+//function to check if space input is valid-K
 bool Board::spaceCheck(char letter, char number){
 	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
@@ -149,7 +149,7 @@ bool Board::spaceCheck(char letter, char number){
 
 	return validSelection;
 }
-
+//function to check if movement selection is valid-K
 bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
@@ -162,6 +162,29 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	int numberValue2 = this->pCipher(number2);
 	int letterValue2 = this->pCipher(letter2);
 
+	//checks for destination piece being on same team
+	bool pieceColour=field[8-numberValue][letterValue-1]->getColour();
+	std::string destination=field[8-numberValue2][letterValue2-1]->getSymbol();
+
+	if (pieceColour==1){
+		for (int i=0;i<6;i++){
+			if (whitePieces[i]==destination){
+				cout<<"Friendly piece!"<<endl;
+				return 0;
+			}
+		}
+	}
+
+	if (pieceColour==0){
+		for (int i=0;i<6;i++){
+			if (blackPieces[i]==destination){
+				cout<<"Friendly piece!"<<endl;
+				return 0;
+			}
+		}
+	}
+
+	//calls piece move function to check valid move
 	if(field[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
 		field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
 		field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);

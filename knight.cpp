@@ -19,7 +19,7 @@ bool Knight::move(int newX, int newY) {
 		cout << "Your Knight is already there." << endl;
 		return 0;
 	}
-
+	
 	//Boolean table showing available move spaces
 	bool canGo[8][8] = {
 		{0,0,0,0,0,0,0,0},
