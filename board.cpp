@@ -162,7 +162,7 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	int numberValue2 = this->pCipher(number2);
 	int letterValue2 = this->pCipher(letter2);
 
-	//checks for destination piece being on same team
+	//checks for destination piece being on same team-K
 	bool pieceColour=field[8-numberValue][letterValue-1]->getColour();
 	std::string destination=field[8-numberValue2][letterValue2-1]->getSymbol();
 
@@ -183,8 +183,39 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 			}
 		}
 	}
+	
+	//pawn diagonal take move variant-K
+	for (int i=0;i<6;i++){
+		//for black pawn
+		if ((field[8-numberValue][letterValue-1]->getSymbol()=="♙") 
+			&&(field[8-numberValue2][letterValue2-1]->getSymbol() == whitePieces[i])){
+
+			if (((numberValue2==numberValue-1) &&(letterValue2==letterValue+1))
+				||((numberValue2==numberValue-1) &&(letterValue2==letterValue-1))){
+				
+				field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
+				field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
+				return 1;
+			}
+		}
+		
+		//for white pawn
+		if ((field[8-numberValue][letterValue-1]->getSymbol()=="♟") 
+			&&(field[8-numberValue2][letterValue2-1]->getSymbol() == blackPieces[i])){
+
+			if (((numberValue2==numberValue+1) && (letterValue2==letterValue+1))
+				||((numberValue2==numberValue+1) && (letterValue2==letterValue-1))){
+				
+				field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
+				field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
+				return 1;
+			}
+		}
+	}
+	
 
 	//calls piece move function to check valid move
+	//if valid completes the move
 	if(field[8-numberValue][letterValue-1]->move(letterValue2, numberValue2)) {
 		field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
 		field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
