@@ -33,8 +33,10 @@ int main() {
 	char number;
 	char letter2;
 	char number2;
+	bool restart;
 	while(true){
 		system("clear");
+		restart = 0;
 
 		board->printBoard();
 
@@ -53,9 +55,14 @@ int main() {
 			cin >> select;
 			letter2 = select[0];
 			number2 = select[1];
+			if((letter2 == 'r') || (letter2 == 'R')) {
+				restart = 1;
+				break;
+			}
 			if(board->movePiece(letter, number, letter2, number2)){break;}
 			cout << "Invalid Selection" << endl;
 		}
+		if(restart) {continue;}
 		board->changeTurn();
 	}
 }

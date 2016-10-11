@@ -197,6 +197,11 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 				field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
 				return 1;
 			}
+
+			//Stopping black pawns from taking forwards
+			if ((numberValue2==numberValue-1) && (letterValue2==letterValue)) {
+				return 0;
+			}
 		}
 		
 		//for white pawn
@@ -209,6 +214,11 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 				field[8-numberValue2][letterValue2-1] = field[8-numberValue][letterValue-1];
 				field[8-numberValue][letterValue-1] = new Piece(field[8-numberValue2][letterValue2-1]->getColour(), letterValue, numberValue);
 				return 1;
+			}
+
+			//Stopping white pawns from taking forwards
+			if ((numberValue2==numberValue+1) && (letterValue2==letterValue)) {
+				return 0;
 			}
 		}
 	}
