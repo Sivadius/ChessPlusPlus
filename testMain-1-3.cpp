@@ -12,13 +12,6 @@
 using namespace std;
 
 int main() {
-	//Useful lists
-	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
-	string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
-
 	//creates new board
 	Board *board;
 	board= new Board();
@@ -65,4 +58,5 @@ int main() {
 		if(restart) {continue;}
 		board->changeTurn();
 	}
+	delete board;
 }

@@ -23,11 +23,29 @@ Board::Board()	{
 	turnWhite=0;
 	turnNum=0;
 
-	// letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	// letters2 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	// numbers = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	// whitePieces = {"♟","♜","♞","♝","♛","♚"};
-	// blackPieces = {"♙","♖","♘","♗","♕","♔"};
+	letters = new char[8];
+	char tLetters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+	
+	letters2 = new char[8];
+	char tLetters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+
+	numbers = new char[8];
+	int tNumbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
+
+	whitePieces = new string[6];
+	string tWhitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
+
+	blackPieces = new string[6];
+	string tBlackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
+	for(int i=0 ; i<8 ; i++) {
+		*(letters+i) = tLetters[i];
+		*(letters2+i) = tLetters2[i];
+		*(numbers+i) = tNumbers[i];
+		if(i<6) {
+			*(whitePieces+i) = tWhitePieces[i];
+			*(blackPieces+i) = tBlackPieces[i];
+		}
+	}
 
 }
 
@@ -99,11 +117,6 @@ void Board::changeTurn() {
 
 //Converts a character to it's integer coordinate
 int Board::pCipher(char input){
-	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	std::string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
-	std::string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
 	int inputValue;
 
 	for(int l=0 ; l<8 ; l++) {
@@ -119,11 +132,6 @@ int Board::pCipher(char input){
 }
 //function to check if space input is valid-K
 bool Board::spaceCheck(char letter, char number){
-	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	std::string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
-	std::string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
 	bool validSelection=0;
 
 	int numberValue= this->pCipher(number);
@@ -151,12 +159,6 @@ bool Board::spaceCheck(char letter, char number){
 }
 //function to check if movement selection is valid-K
 bool Board::movePiece(char letter, char number, char letter2, char number2) {
-	char letters[8] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-	char letters2[8] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	char numbers[8] = {'1', '2', '3', '4', '5', '6', '7', '8'};
-	std::string whitePieces[6] = {"♟","♜","♞","♝","♛","♚"};
-	std::string blackPieces[6] = {"♙","♖","♘","♗","♕","♔"};
-
 	int numberValue= this->pCipher(number);
 	int letterValue= this->pCipher(letter);
 	int numberValue2 = this->pCipher(number2);
@@ -164,7 +166,7 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 
 	//checks for destination piece being on same team-K
 	bool pieceColour=field[8-numberValue][letterValue-1]->getColour();
-	std::string destination=field[8-numberValue2][letterValue2-1]->getSymbol();
+	string destination=field[8-numberValue2][letterValue2-1]->getSymbol();
 
 	if (pieceColour==1){
 		for (int i=0;i<6;i++){
@@ -235,4 +237,10 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	return 0;
 }
 
-Board::~Board() {}
+Board::~Board() {
+	delete letters;
+	delete letters2;
+	delete numbers;
+	delete whitePieces;
+	delete blackPieces;
+}

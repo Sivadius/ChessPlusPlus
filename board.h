@@ -7,11 +7,11 @@
 //class type for board object
 class Board{
 protected:
-	// char letters[8];
-	// char letters2[8];
-	// char numbers[8];
-	// std::string whitePieces[6];
-	// std::string blackPieces[6];
+	char *letters;
+	char *letters2;
+	char *numbers;
+	std::string *whitePieces;
+	std::string *blackPieces;
 
 public:
 
