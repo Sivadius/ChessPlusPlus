@@ -56,6 +56,7 @@ int main() {
 			cout << "Invalid Selection" << endl;
 		}
 		if(restart) {continue;}
+		bool endThis;
 		board->changeTurn();
 	}
 	delete board;

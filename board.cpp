@@ -241,6 +241,6 @@ Board::~Board() {
 	delete letters;
 	delete letters2;
 	delete numbers;
-	delete whitePieces;
-	delete blackPieces;
+	delete[] whitePieces;
+	delete[] blackPieces;
 }
