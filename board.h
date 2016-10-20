@@ -28,6 +28,7 @@ public:
 	void changeTurn();
 	bool spaceCheck(char letter, char number);
 	bool movePiece(char letter, char number, char letter2, char number2);
+	Piece *getPiece(int x, int y);
 	~Board();
 
 };

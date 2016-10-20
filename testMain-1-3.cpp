@@ -16,6 +16,8 @@ int main() {
 	Board *board;
 	board= new Board();
 
+	Piece *fieldPointer;
+
 	board->newGame();
 	board->printBoard();
 
@@ -31,8 +33,10 @@ int main() {
 		system("clear");
 		restart = 0;
 
+		fieldPointer = board->getPiece(4,7);
 		board->printBoard();
 
+		cout<< fieldPointer->getSymbol() <<endl;
 		//Piece Selection
 		while(true){
 			cin >> select;

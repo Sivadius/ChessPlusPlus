@@ -49,6 +49,10 @@ Board::Board()	{
 
 }
 
+Piece *Board::getPiece(int x, int y){
+	return field[y][x];
+}
+
 //sets up board for new game -K
 void Board::newGame(){
 	//clearing board with empty pieces
@@ -236,6 +240,8 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	
 	return 0;
 }
+
+bool Board::collisionCheck()
 
 Board::~Board() {
 	delete letters;
