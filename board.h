@@ -23,6 +23,7 @@ public:
 	int pCipher(char input);	
 	void printBoard();
 	void newGame();
+	void testGame_1(bool colour);
 	bool getTurn();
 	int getTurnNum();
 	void changeTurn();

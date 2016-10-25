@@ -85,6 +85,23 @@ void Board::newGame(){
 	turnWhite=1;
 	turnNum=1;
 }
+
+void Board::testGame_1(bool colour){
+
+	//clearing board with empty pieces
+	for(int i=0 ; i<8 ; i++) {
+		for(int j=0 ; j<8 ; j++) {
+			field[i][j] = new Piece(0,i+1,j+1);
+		}
+	}
+
+	field[0][0] = new Queen(colour,0,0);
+
+	turnWhite = 1;
+	turnNum =1;
+
+}
+
 //displays current board state in terminal-K
 void Board::printBoard(){
 
@@ -241,7 +258,7 @@ bool Board::movePiece(char letter, char number, char letter2, char number2) {
 	return 0;
 }
 
-bool Board::collisionCheck()
+//bool Board::collisionCheck(){}
 
 Board::~Board() {
 	delete letters;
