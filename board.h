@@ -24,6 +24,7 @@ public:
 	void printBoard();
 	void newGame();
 	void testGame_1(bool colour);
+	void testGame_2();
 	bool getTurn();
 	int getTurnNum();
 	void changeTurn();

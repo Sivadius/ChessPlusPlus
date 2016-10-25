@@ -53,7 +53,7 @@ bool Queen::move(int newX, int newY) {
 		canGo[i][yPos-1] = 1;
 	}
 
-	// this->printMoveTable(canGo);
+	this->printMoveTable(canGo);
 
 	//Checks for valid movement
 	if(canGo[newX-1][newY-1] == 1) {

@@ -102,6 +102,21 @@ void Board::testGame_1(bool colour){
 
 }
 
+void Board::testGame_2(){
+	//clearing board with empty pieces
+	for(int i=0 ; i<8 ; i++) {
+		for(int j=0 ; j<8 ; j++) {
+			field[i][j] = new Piece(0,i+1,j+1);
+		}
+	}
+
+	field[7][0] = new Queen(1,1,1);
+	field[1][2] = new Pawn(0,3,7);
+
+	turnWhite = 1;
+	turnNum =1;
+}
+
 //displays current board state in terminal-K
 void Board::printBoard(){
 

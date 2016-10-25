@@ -50,7 +50,7 @@ bool Pawn::move(int newX, int newY) {
 		}
 	}
 
-	// this->printMoveTable(canGo);
+	this->printMoveTable(canGo);
 
 	//Checks for valid movement
 	if(canGo[newX-1][newY-1] == 1) {
